@@ -1,0 +1,35 @@
+---
+# This playbook contains steps to gather OS name and version and verify whether it is comply with the requirements or not
+
+- name: Get Hostname
+  set_fact:
+    hostname: "{{ ansible_hostname  }}"
+
+- name: Get OS Name
+  set_fact:
+    os_distribution: "{{ ansible_distribution }}"
+
+- name: Get OS Major Version
+  set_fact:
+    os_major_version: "{{ ansible_distribution_major_version }}"
+
+- name: Get OS Major Version
+  set_fact:
+    os_version: "{{ ansible_distribution_version }}"
+
+- name: Set not comply by default
+  set_fact:
+    is_comply: false
+
+- name: Check if comply with OS Version
+  set_fact:
+    is_comply: true
+  when: ansible_distribution|lower == "ubuntu" and "24" in ansible_distribution_major_version
+
+- debug:
+    msg:
+    - "hostname: {{ hostname }}"
+    - "ip address: {{ ansible_all_ipv4_addresses | ipaddr('10.0.0.0/8') | first }}"
+    - "os name: {{ os_distribution }}"
+    - "os version: {{ os_version }}"
+    - "os comply: {{ is_comply }}"

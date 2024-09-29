@@ -1,0 +1,10 @@
+---
+# This playbook contains steps to gather OS name and version and verify whether it is comply with the requirements or not
+
+- name: Run the Main Tasks
+  hosts: all:localhost
+  remote_user: linuxuser
+  vars:
+    ansible_ssh_private_key_file: "/root/.ssh/id_rsa"
+  roles:
+    - role: "./"
